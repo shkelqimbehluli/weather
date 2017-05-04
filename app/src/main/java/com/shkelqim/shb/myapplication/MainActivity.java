@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText cityname ;
     String location = "";
+    int temperatura ;
+    String temperaturadeskrip = "";
+    String maintemptekst = "";
     //London
     //api.openweathermap.org/data/2.5/weather?q=London
     final String APIKey = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -49,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
                         try {
 
                             location = ApiRequestt(APIKey).getString("name").toString() ;
-
+                            temperatura= ApiRequestt(APIKey).getJSONObject("main").getInt("temp");
+                            temperaturadeskrip = ApiRequestt(APIKey).getJSONArray("weather").getJSONObject(0).getString("description");
+                            maintemptekst = ApiRequestt(APIKey).getJSONArray("weather").getJSONObject(0).getString("main");
                             //Log.d(ApiRequestt(APIKey).getString("name").toString(),"") ;
 
 
@@ -60,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).start();
 
-
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 ndrroemrat();
             }
         });
@@ -68,22 +77,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void ndrroemrat(){
         TextView mTextView = (TextView) findViewById(R.id.textView);
-        mTextView.setText(location);
-    }
-    public void klikimi (View view){
-        new Thread(new Runnable() {
-            public void run() {
+        TextView mTextView1 = (TextView) findViewById(R.id.textView4);
+        TextView mTextView2 = (TextView) findViewById(R.id.textView5);
+        TextView mTextView3 = (TextView) findViewById(R.id.textView6);
 
 
+        mTextView.setText("City Name :  " + location);
+        mTextView1.setText("Temperatura :  " + temperatura);
+        mTextView2.setText("Pershkrimi :  " + temperaturadeskrip);
+        mTextView3.setText("Pershkrimi2 :  " + maintemptekst);
 
-                try {
-                    //Jsonshfaq.setText(ApiRequestt(APIKey).getString("name").toString());
-                    Log.d("NAME ::  " , ApiRequestt(APIKey).getString("name").toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
 
     }
     public JSONObject ApiRequestt(String APIURL){
