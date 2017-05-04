@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +20,7 @@ import java.net.URLConnection;
 public class MainActivity extends AppCompatActivity {
 
     EditText cityname ;
+    String location = "";
     //London
     //api.openweathermap.org/data/2.5/weather?q=London
     final String APIKey = "http://api.openweathermap.org/data/2.5/weather?q=";
@@ -33,11 +36,52 @@ public class MainActivity extends AppCompatActivity {
         loadsqllite();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button searchi = (Button) findViewById(R.id.button2);
+
+
+        searchi.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    public void run() {
+
+                        try {
+
+                            location = ApiRequestt(APIKey).getString("name").toString() ;
+
+                            //Log.d(ApiRequestt(APIKey).getString("name").toString(),"") ;
+
+
+                            System.out.println(location);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
+                ndrroemrat();
+            }
+        });
+    }
+
+    public void ndrroemrat(){
+        TextView mTextView = (TextView) findViewById(R.id.textView);
+        mTextView.setText(location);
     }
     public void klikimi (View view){
         new Thread(new Runnable() {
             public void run() {
-                ApiRequestt(APIKey);
+
+
+
+                try {
+                    //Jsonshfaq.setText(ApiRequestt(APIKey).getString("name").toString());
+                    Log.d("NAME ::  " , ApiRequestt(APIKey).getString("name").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 
@@ -58,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
-           // Log.d("JSON FORMAT :   ", stringBuffer.toString());
+            Log.d("JSON FORMAT :   ", stringBuffer.toString());
 
             return new JSONObject(stringBuffer.toString());
 
@@ -75,10 +119,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+
+
     }
 
 
     protected void onPostExecute(JSONObject response) {
+
         if(response != null) {
             try {
                 Log.e("App", "Success: " + response.getString("yourJsonElement") );
