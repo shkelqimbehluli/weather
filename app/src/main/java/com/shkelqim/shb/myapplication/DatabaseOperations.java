@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DatabaseOperations extends SQLiteOpenHelper {
     public static final int database_version = 1;
-    public String CREATE_QUERY = "CREATE TABLE "+ TableData.TableInfo.TABLE_NAME + "(" + TableData.TableInfo.ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TableData.TableInfo.LOCATION + " TEXT," + TableData.TableInfo.TEMPERATURE + " INTEGER," + TableData.TableInfo.DESCRIPTION + " TEXT," + TableData.TableInfo.MAINDESCRIPT + " TEXT );" ;
+    public String CREATE_QUERY = "CREATE TABLE "+ TableData.TableInfo.TABLE_NAME + "(" + TableData.TableInfo.ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TableData.TableInfo.LOCATION + " TEXT," + TableData.TableInfo.TEMPERATURE + " DOUBLE," + TableData.TableInfo.DESCRIPTION + " TEXT," + TableData.TableInfo.MAINDESCRIPT + " TEXT );" ;
 
 
     public DatabaseOperations(Context context) {
@@ -37,7 +37,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         Log.d("Databaza ","Tabelen e krijuar edito");
     }
 
-    public boolean insertData(String location,String descript, Integer temp, String mdescr){
+    public boolean insertData(String location,String descript, double temp, String mdescr){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contenti = new ContentValues();
 

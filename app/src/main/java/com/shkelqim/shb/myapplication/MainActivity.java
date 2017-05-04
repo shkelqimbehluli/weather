@@ -17,12 +17,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static DecimalFormat df2 = new DecimalFormat(".##");
     EditText cityname ;
     String location = "";
-    int temperatura ;
+    double temperatura ;
     String temperaturadeskrip = "";
     String maintemptekst = "";
     //London
@@ -59,10 +61,11 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
 
                         try {
-
+                            double kelvin = 273.15;
                             location = ApiRequestt(APIKey).getString("name").toString() ;
-                            temperatura= ApiRequestt(APIKey).getJSONObject("main").getInt("temp");
-                            temperaturadeskrip = ApiRequestt(APIKey).getJSONArray("weather").getJSONObject(0).getString("description");
+                            temperatura= ApiRequestt(APIKey).getJSONObject("main").getDouble("temp") -  kelvin;
+
+                            temperaturadeskrip = ApiRequestt(APIKey).getJSONArray("weather").getJSONObject(0).getString("description") ;
                             maintemptekst = ApiRequestt(APIKey).getJSONArray("weather").getJSONObject(0).getString("main");
                             //Log.d(ApiRequestt(APIKey).getString("name").toString(),"") ;
 
