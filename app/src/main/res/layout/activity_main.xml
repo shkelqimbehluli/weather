@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="1dp"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp"
+    android:paddingTop="1dp"
     tools:context="com.shkelqim.shb.myapplication.MainActivity">
 
     <EditText
@@ -15,17 +19,21 @@
         android:text="Name"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
-        />
+        android:layout_marginTop="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_above="@id/editText"
-
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="klikimi"
         android:text="Search"
-        tools:layout_editor_absoluteY="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/editText"
-        android:layout_marginLeft="0dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toRightOf="@+id/editText"
+        android:layout_toEndOf="@+id/editText"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
+</RelativeLayout>
