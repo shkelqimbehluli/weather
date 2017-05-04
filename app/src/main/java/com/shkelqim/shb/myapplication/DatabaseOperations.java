@@ -49,8 +49,10 @@ public class DatabaseOperations extends SQLiteOpenHelper {
         long rezultati = db.insert(TableData.TableInfo.TABLE_NAME,null,contenti);
 
         if(rezultati == -1) {
+            // System.out.println("-1");
             return false;
         }else{
+           // System.out.println("00");
             return true;
         }
 
@@ -58,7 +60,7 @@ public class DatabaseOperations extends SQLiteOpenHelper {
 
     public Cursor merri(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("select * from "+ TableData.TableInfo.TABLE_NAME, null);
+        Cursor result = db.rawQuery("SELECT * FROM "+ TableData.TableInfo.TABLE_NAME + "  WHERE   ID = (SELECT MAX(ID)  FROM "+ TableData.TableInfo.TABLE_NAME + ");", null);
 
         return result;
     }

@@ -1,5 +1,6 @@
 package com.shkelqim.shb.myapplication;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,16 +30,24 @@ public class MainActivity extends AppCompatActivity {
     final String APIKey = "http://api.openweathermap.org/data/2.5/weather?q=";
     final String APIID = "&APPID=e7c75ebafb8910969cadcaaa39517929";
     String finale = "";
+    DatabaseOperations mydb ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
 
+
+
+
         //ApiRequestt(finale);
-        loadsqllite();
+        mydb = new DatabaseOperations(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadsqllite();
         Button searchi = (Button) findViewById(R.id.button2);
 
 
@@ -58,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                             //Log.d(ApiRequestt(APIKey).getString("name").toString(),"") ;
 
 
-                            System.out.println(location);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -71,16 +80,18 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 ndrroemrat();
+                mydb.insertData(location,temperaturadeskrip,temperatura,maintemptekst);
+
             }
         });
     }
 
     public void ndrroemrat(){
+
         TextView mTextView = (TextView) findViewById(R.id.textView);
         TextView mTextView1 = (TextView) findViewById(R.id.textView4);
         TextView mTextView2 = (TextView) findViewById(R.id.textView5);
         TextView mTextView3 = (TextView) findViewById(R.id.textView6);
-
 
         mTextView.setText("City Name :  " + location);
         mTextView1.setText("Temperatura :  " + temperatura);
@@ -140,6 +151,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadsqllite(){
+        TextView m1TextView = (TextView) findViewById(R.id.textView);
+        TextView m1TextView1 = (TextView) findViewById(R.id.textView4);
+        TextView m1TextView2 = (TextView) findViewById(R.id.textView5);
+        TextView m1TextView3 = (TextView) findViewById(R.id.textView6);
+
+        String location1 = "";
+        String descript = "";
+        String mdescript = "";
+        String tempi = "";
+        Cursor res = mydb.merri();
+                    while (res.moveToNext()){
+                        location1 = res.getString(1) ;
+                        tempi = res.getString(2);
+                        descript = res.getString(3);
+                        mdescript = res.getString(4);
+                    }
+
+        m1TextView.setText("City Name :  " + location1);
+        m1TextView1.setText("Temperatura :  " + tempi);
+        m1TextView2.setText("Pershkrimi :  " + descript);
+        m1TextView3.setText("Pershkrimi2 :  " + mdescript);
+
 
     }
 }
